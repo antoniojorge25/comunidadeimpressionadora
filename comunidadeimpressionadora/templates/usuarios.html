@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block corpo %}
+    <div class="container">
+        <h1>Usuarios da Comunidade impressionadora</h1>
+        {% for usuario in lista_usuarios %}
+            <div class="container mt-5 d-flex justify-content-center">
+            <div class="card p-3">
+                <div class="d-flex align-items-center">
+                    <div class="image pe-2">
+                <img  src="{{ url_for('static', filename= 'fotos_perfil/{}'.format(usuario.foto_perfil)) }}" class="rounded" width="200" >
+                </div>
+                <div class="ml-3 w-100">
+                   <h4 class="mb-0 mt-0">{{ usuario.username }}</h4>
+                   <span>{{ usuario.email }}</span>
+                   <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+                    <div class="d-flex flex-column">
+                        <span class="articles">Cursos</span>
+                        {% if 'Não informado' in usuario .cursos %}
+                            <span class="number1">0</span>
+                        {% else %}
+                            <span class="number1">{{ usuario.cursos.count(";") + 1 }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="d-flex flex-column">
+                        <span class="rating">Posts</span>
+                        <span class="number3">{{ usuario.contar_posts() }}</span>
+                    </div>
+                   </div>
+                </div>
+                </div>
+            </div>
+         </div>
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="col col-4" style="text-align: center">
+        <strong>Cursos</strong><br>
+        {% for curso in usuario.cursos.split(';') %}
+            <button type="button" class="btn btn-success mt-1" disabled>{{ curso }}</button>
+        {% endfor %}
+    </div>
+
+</div>
+        {% endfor %}
+        <div class="row mt-5"></div>
+    </div>
+{% endblock %}
